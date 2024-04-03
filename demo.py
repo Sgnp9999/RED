@@ -1,3 +1,4 @@
+import streamlit as st
 from langchain_community.llms.huggingface_pipeline import HuggingFacePipeline
 
 
@@ -15,11 +16,16 @@ prompt = PromptTemplate.from_template(template)
 
 chain = prompt | hf
 
-def main():
-    while True:
-        question = input("Ask Q: ")
-        print(chain.invoke({"question": question}))
+def mistral(question):
+    return chain.invoke({"question": question})
 
-if __name__ =="__main__":
-    print("calling")
+
+def main():
+    st.title("Greeting Application")
+    question = st.text_input("Enter your name", "")
+    result=mistral(question)
+    if question:
+        st.write(result)
+
+if __name__ == "__main__":
     main()
